@@ -1,6 +1,8 @@
 const assert = require('chai').assert;
 
-const typical_return =
+const parser = require('./parser');
+
+const typicalReturn =
 `{lan_mac::E4:F4:C6:0B:E7:C4}
 {wan_mac::E4:F4:C6:0B:E7:C6}
 {wl_mac::E4:F4:C6:0B:E7:C7}
@@ -28,3 +30,12 @@ const typical_return =
 {gps_londec::}
 {gps_link::}
 {nvram::38.40 KB / 64 KB}`;
+
+describe('client data structure test', function () {
+  it('should parse a client string', function () {
+    const client = new parser.client(['Bendphone','10.0.0.128','xx:xx:xx:xx:23:8E','1 day 00:00:00','128']);
+    assert(client.hostname === 'Bendphone', 'could not parse hostname');
+    assert(client.ip === '10.0.0.128', 'could not parse ip');
+    assert(client.mac === 'xx:xx:xx:xx:23:8E', 'could not parse mac');
+  });
+});
