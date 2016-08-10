@@ -9,27 +9,30 @@ const request = require('request');
 
 const rcfilename = 'whoshomerc.json';
 
-let rcFile = findRcFile();
-let rc = {};
-if (rcFile) {
-  rc = require(rcFile);
-}
+function whoshome() {
+  return new Promise(function (resolve, reject) {
+    let rcFile = findRcFile();
+    let rc = {};
+    if (!rcFile) {
+      reject('could not find rc file');
+    }
+    rc = require(rcFile);
+    request(`http://${rc.router}/Info.live.htm`, function (err, res, body) {
+      if (err) {
+        console.error('could not contact server');
+        system.exit(1);
+      }
 
-request('http://10.0.0.1/Info.live.htm', function (err, res, body) {
-  if (err) {
-    console.error('could not contact server');
-    system.exit(1);
-  }
+      let hosts = _.filter(parse(body), (host) => _.has(host, 'snr'));
 
-  let hosts = _.filter(parse(body), (host) => _.has(host, 'snr'));
+      if (rc.blacklist) {
+        hosts = _.filter(hosts, (host) => _.indexOf(rc.blacklist, host.hostname) < 0);
+      }
 
-  if (rc.blacklist) {
-    hosts = _.filter(hosts, (host) => _.indexOf(rc.blacklist, host.hostname) < 0);
-  }
-
-  const out = _.join(_.map(hosts, (h) => _.join(_.values(h), ' ')), '\n');
-  console.log(out);
-});
+      resolve(hosts);
+    });
+  });
+};
 
 function findRcFile() {
   let rcFile, dotRcFile;
@@ -46,3 +49,5 @@ function findRcFile() {
   }
   return false;
 }
+
+module.exports = whoshome;
