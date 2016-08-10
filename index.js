@@ -27,6 +27,8 @@ request('http://10.0.0.1/Info.live.htm', function (err, res, body) {
     hosts = _.filter(hosts, (host) => _.indexOf(rc.blacklist, host.hostname) < 0);
   }
 
+  const out = _.join(_.map(hosts, (h) => _.join(_.values(h), ' ')), '\n');
+  console.log(out);
 });
 
 function findRcFile() {
