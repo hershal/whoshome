@@ -1,5 +1,8 @@
 'use strict';
 
+const parse = require('./parser').parse;
+const unquote = require('./unquote');
+
 const request = require('request');
 
 request('http://10.0.0.1/Info.live.htm', function (err, res, body) {
@@ -8,5 +11,5 @@ request('http://10.0.0.1/Info.live.htm', function (err, res, body) {
     system.exit(1);
   }
 
-  console.log(`body: ${body}`);
+  console.log(parse(body));
 });

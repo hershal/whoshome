@@ -3,35 +3,49 @@
 const _ = require('lodash');
 const unquote = require('./unquote');
 
-module.exports.parse = function (string) {
-  let dhcpClients;
-  let wifiClients;
+function dhcp(args) {
+  return {
+    hostname: args[0],
+    ip: args[1],
+    mac: args[2]
+  };
+}
 
+function wifi(args) {
+  return {
+    mac: args[0],
+    uptime: args[2],
+    signal: args[5],
+    snr: args[7]
+  };
+}
+
+function parse(string) {
   const lines = _(string).split('\n').map((str) => unquote(str, '\{\}')).value();
 
-  const dhcpClientsString = getCategory(lines, 'dhcp_leases');
-  const wirelessClientsString = getCategory(lines, 'active_wireless');
+  const dhcpClients = _.map(getCategory(lines, 'dhcp_leases', 5), (arr) => dhcp(arr));
+  let dhcpClientsHash = _.zipObject(_.map(dhcpClients, (c) => c.mac), dhcpClients);
 
-  return dhcpClientsString;
+  const wifiClients = _.map(getCategory(lines, 'active_wireless', 9), (arr) => wifi(arr));
+  let wifiClientsHash = _.zipObject(_.map(wifiClients, (w) => w.mac), wifiClients);
+
+  return _.values(_.merge(dhcpClientsHash, wifiClientsHash));
 };
 
-function getCategory(lines, category) {
+function getCategory(lines, category, chunkSize) {
   const line = _(lines)
           .filter((line) => _.split(line, '::')[0] === category)
           .split('::')
           .value()[1];
 
   return _(line)
-    .split(',')
+    .split('\',\'')
+    .map(_.trim)
     .map(unquote)
-    .chunk(5)
+    .chunk(chunkSize)
     .value();
 }
 
-module.exports.client = class client {
-  constructor(args) {
-    this.hostname = args[0];
-    this.ip = args[1];
-    this.mac = args[2];
-  }
-};
+module.exports.dhcp = dhcp;
+module.exports.wifi = wifi;
+module.exports.parse = parse;

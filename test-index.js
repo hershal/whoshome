@@ -31,11 +31,25 @@ const typicalReturn =
 {gps_link::}
 {nvram::38.40 KB / 64 KB}`;
 
+describe('basic test', function () {
+  it('should parse a typical return', function () {
+    parser.parse(typicalReturn);
+  });
+});
+
 describe('client data structure test', function () {
-  it('should parse a client string', function () {
-    const client = new parser.client(['Bendphone','10.0.0.128','xx:xx:xx:xx:23:8E','1 day 00:00:00','128']);
+  it('should parse a dhcp client string', function () {
+    const client = new parser.dhcp(['Bendphone','10.0.0.128','xx:xx:xx:xx:23:8E','1 day 00:00:00','128']);
     assert(client.hostname === 'Bendphone', 'could not parse hostname');
     assert(client.ip === '10.0.0.128', 'could not parse ip');
     assert(client.mac === 'xx:xx:xx:xx:23:8E', 'could not parse mac');
+  });
+
+  it('should parse a wifi client string', function () {
+    const client = new parser.wifi(['xx:xx:xx:xx:23:8E', 'eth2', '5:47:52', '6M', '24M', '-74', '-92', '18', '242']);
+    assert(client.mac === 'xx:xx:xx:xx:23:8E', 'could not parse mac');
+    assert(client.uptime === '5:47:52', 'could not parse uptime');
+    assert(client.signal === '-74', 'could not parse signal');
+    assert(client.snr === '18', 'could not parse snr');
   });
 });
