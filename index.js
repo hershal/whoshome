@@ -19,8 +19,7 @@ function whoshome() {
     rc = require(rcFile);
     request(`http://${rc.router}/Info.live.htm`, function (err, res, body) {
       if (err) {
-        console.error('could not contact server');
-        system.exit(1);
+        reject(new Error('could not contact server'));
       }
 
       let hosts = _.filter(parse(body), (host) => _.has(host, 'snr'));
