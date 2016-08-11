@@ -14,5 +14,23 @@
     "lodash": "^4.14.2",
     "mocha": "^3.0.2",
     "request": "^2.74.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+    "devDependencies": {
+        "chai": "^3.5.0",
+        "mocha": "^3.0.2"
+    },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hershal/whoshome.git"
+  },
+  "keywords": [
+    "dd-wrt"
+  ],
+  "bugs": {
+    "url": "https://github.com/hershal/whoshome/issues"
+  },
+  "homepage": "https://github.com/hershal/whoshome#readme"
 }
