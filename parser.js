@@ -17,6 +17,7 @@ function wifi(args) {
     uptime: args[2],
     signal: parseInt(args[5]),
     snr: parseInt(args[7]),
+    quality: Math.min(Math.max(args[8]/10.0, 0), 100)
   };
 }
 
