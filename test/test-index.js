@@ -1,6 +1,6 @@
 const assert = require('chai').assert;
 
-const parser = require('./parser');
+const parser = require('../parser');
 
 const typicalReturn =
 `{lan_mac::E4:F4:C6:0B:E7:C4}
