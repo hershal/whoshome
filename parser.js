@@ -15,8 +15,8 @@ function wifi(args) {
   return {
     mac: args[0],
     uptime: args[2],
-    signal: args[5],
-    snr: args[7]
+    signal: parseInt(args[5]),
+    snr: parseInt(args[7]),
   };
 }
 
