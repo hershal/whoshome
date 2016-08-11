@@ -1,6 +1,6 @@
 {
   "name": "whoshome",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "finds out who's home based on dd-wrt status pages",
   "main": "index.js",
   "scripts": {
