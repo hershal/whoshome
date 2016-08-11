@@ -21,7 +21,7 @@ function whoshome() {
         reject(new Error('could not contact server'));
       }
 
-      let hosts = _.filter(parse(body), (host) => _.has(host, 'snr'));
+      let hosts = parse(body);
 
       if (rc.blacklist) {
         hosts = _.filter(hosts, (host) => _.indexOf(rc.blacklist, host.hostname) < 0);
