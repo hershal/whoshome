@@ -11,8 +11,7 @@ const rcfilename = 'whoshomerc.json';
 
 function whoshome() {
   return new Promise(function (resolve, reject) {
-    let rcFile = findRcFile();
-    let rc = {};
+    let rcFile = findRcFile(), rc = {};
     if (!rcFile) {
       reject('could not find rc file');
     }
