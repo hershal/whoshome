@@ -14,10 +14,12 @@ function dhcp(args) {
 function wifi(args) {
   return {
     mac: args[0],
-    uptime: args[2],
-    signal: parseInt(args[5]),
-    snr: parseInt(args[7]),
-    quality: Math.min(Math.max(args[8]/10.0, 0), 100)
+    wifi: {
+      uptime: args[2],
+      signal: parseInt(args[5]),
+      snr: parseInt(args[7]),
+      quality: Math.min(Math.max(args[8]/10.0, 0), 100)
+    }
   };
 }
 
