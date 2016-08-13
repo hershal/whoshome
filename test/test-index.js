@@ -48,8 +48,8 @@ describe('client data structure test', function () {
   it('should parse a wifi client string', function () {
     const client = new parser.wifi(['xx:xx:xx:xx:23:8E', 'eth2', '5:47:52', '6M', '24M', '-74', '-92', '18', '242']);
     assert(client.mac === 'xx:xx:xx:xx:23:8E', 'could not parse mac');
-    assert(client.uptime === '5:47:52', 'could not parse uptime');
-    assert(client.signal === '-74', 'could not parse signal');
-    assert(client.snr === '18', 'could not parse snr');
+    assert(client.wifi.uptime === '5:47:52', 'could not parse uptime');
+    assert(client.wifi.signal == '-74', 'could not parse signal');
+    assert(client.wifi.snr == '18', 'could not parse snr');
   });
 });
