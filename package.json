@@ -1,6 +1,6 @@
 {
   "name": "whoshome",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "finds out who's home based on dd-wrt status pages",
   "main": "index.js",
   "scripts": {
@@ -16,10 +16,10 @@
   "directories": {
     "test": "test"
   },
-    "devDependencies": {
-        "chai": "^3.5.0",
-        "mocha": "^3.0.2"
-    },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hershal/whoshome.git"
