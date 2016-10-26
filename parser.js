@@ -16,6 +16,8 @@ function wifi(args) {
     mac: args[0],
     wifi: {
       uptime: args[2],
+      tx: args[3],
+      rx: args[4],
       signal: parseInt(args[5]),
       snr: parseInt(args[7]),
       quality: Math.min(Math.max(args[8]/10.0, 0), 100)

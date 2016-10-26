@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const assert = require('chai').assert;
 
 const parser = require('../parser');
@@ -31,9 +32,14 @@ const typicalReturn =
 {gps_link::}
 {nvram::38.40 KB / 64 KB}`;
 
+function validIP(ip) {
+  const re = new RegExp(_.join(Array(4).fill("[0-9]{1,3"), "."));
+}
+
 describe('basic test', function () {
   it('should parse a typical return', function () {
-    parser.parse(typicalReturn);
+    const clients = parser.parse(typicalReturn);
+    assert(clients.length == 13);
   });
 });
 
@@ -51,5 +57,7 @@ describe('client data structure test', function () {
     assert(client.wifi.uptime === '5:47:52', 'could not parse uptime');
     assert(client.wifi.signal == '-74', 'could not parse signal');
     assert(client.wifi.snr == '18', 'could not parse snr');
+    assert(client.wifi.tx == '6M', 'could not parse tx rate');
+    assert(client.wifi.rx == '24M', 'could not parse rx rate');
   });
 });
